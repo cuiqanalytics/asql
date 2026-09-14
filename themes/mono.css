@@ -1,0 +1,27 @@
+/* mono — grayscale, near-black accent; monospace throughout, every border/shadow/corner
+   accent stripped for a stark, minimal terminal-like look. Sharp corners, no underlines. */
+:root {
+	--canvas: #FAFAFA;
+	--paper: #FFFFFF;
+	--ink: #111111;
+	--ink-soft: #5A5A5A;
+	--ink-faint: #8A8A8A;
+	--line: #DADADA;
+	--accent: #111111;
+	--accent-soft: #EDEDED;
+	--positive: #2E7D32;
+	--positive-soft: #E4F0E5;
+	--negative: #C62828;
+	--negative-soft: #F6E0E0;
+	--sans: ui-monospace, 'SF Mono', 'Cascadia Mono', Consolas, monospace;
+	--chart-accent: #111111;
+	--chart-palette: #111111, #444444, #6E6E6E, #969696, #BEBEBE;
+}
+.card { border-radius: 0; box-shadow: none; }
+.card::before { display: none; }
+details { border-radius: 0; }
+.kpi-tile { border-radius: 0; }
+.section-label { border-left: none; padding-left: 0; text-transform: uppercase; letter-spacing: 0.15em; }
+h2.section-label { border-bottom: none; text-transform: uppercase; letter-spacing: 0.1em; }
+th { border-bottom: 1px solid var(--line); }
+.masthead-bar { background: var(--ink); }

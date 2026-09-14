@@ -1,0 +1,24 @@
+/* forest — muted green/earth tones; serif section labels with no underline, softened
+   corner-mark accent, slightly squared-off cards for an earthy field-notebook feel. */
+:root {
+	--canvas: #F2F1EA;
+	--paper: #FBFAF6;
+	--ink: #2B3328;
+	--ink-soft: #5C6A55;
+	--ink-faint: #8A9782;
+	--line: #DCE0D2;
+	--accent: #4B7F52;
+	--accent-soft: #E4EEE0;
+	--positive: #3F7D45;
+	--positive-soft: #E1F0DF;
+	--negative: #A6472F;
+	--negative-soft: #F3DED6;
+	--sans: Georgia, 'Iowan Old Style', 'Palatino Linotype', Palatino, serif;
+	--chart-accent: #4B7F52;
+	--chart-palette: #4B7F52, #A6472F, #7C9A3B, #8C6D3F, #5C7A6E, #B4915C;
+}
+.card { border-radius: 4px; }
+.card::before { border-width: 1px; width: 10px; height: 10px; }
+.section-label { border-left: none; font-style: italic; letter-spacing: 0.04em; }
+h2.section-label { border-bottom: none; font-style: italic; }
+details { border-radius: 4px; }

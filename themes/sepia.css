@@ -1,0 +1,24 @@
+/* sepia — warm cream/paper tones, print-like; serif headings, no underline on section
+   titles, thin hairline table rules instead of the default heavy accent underline. */
+:root {
+	--canvas: #F4ECD8;
+	--paper: #FBF6EA;
+	--ink: #3B2F22;
+	--ink-soft: #7A6A55;
+	--ink-faint: #9C8D77;
+	--line: #E0D2B4;
+	--accent: #8C5A2B;
+	--accent-soft: #F0E2C8;
+	--positive: #4C7A3D;
+	--positive-soft: #E5EFD8;
+	--negative: #A83232;
+	--negative-soft: #F5DCD8;
+	--sans: Georgia, 'Iowan Old Style', 'Palatino Linotype', Palatino, serif;
+	--chart-accent: #8C5A2B;
+	--chart-palette: #8C5A2B, #4C7A3D, #A83232, #7A6A9C, #C08A3E, #5B7A8C;
+}
+.card::before { display: none; }
+.section-label { border-left: none; padding-left: 0; font-style: italic; }
+h2.section-label { border-bottom: none; font-style: italic; }
+th { border-bottom: 1px solid var(--line); }
+.card-title, .narrative-card-title { font-style: italic; }

@@ -1,0 +1,22 @@
+/* nordic — cool blue-gray palette; flat cards (no corner brackets), soft shadow, generous
+   rounding for a clean Scandinavian feel. Typography stays default sans. */
+:root {
+	--canvas: #ECEFF4;
+	--paper: #FFFFFF;
+	--ink: #2E3440;
+	--ink-soft: #4C566A;
+	--ink-faint: #7B8494;
+	--line: #D8DEE9;
+	--accent: #5E81AC;
+	--accent-soft: #E5EAF2;
+	--positive: #4C8A6A;
+	--positive-soft: #DCEEE5;
+	--negative: #BF616A;
+	--negative-soft: #F5DEE0;
+	--chart-accent: #5E81AC;
+	--chart-palette: #5E81AC, #88C0D0, #B48EAD, #D08770, #A3BE8C, #EBCB8B;
+}
+.card::before { display: none; }
+.card { border-radius: 12px; box-shadow: 0 2px 8px rgba(46, 52, 64, 0.08); }
+details { border-radius: 12px; }
+.kpi-tile { border-radius: 8px; }

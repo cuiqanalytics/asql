@@ -1,0 +1,25 @@
+/* midnight — dark slate background, soft blue accent, flat modern cards (no corner
+   brackets), a geometric sans throughout. */
+:root {
+	--canvas: #0F1115;
+	--paper: #1A1D23;
+	--ink: #E8E9ED;
+	--ink-soft: #9CA3AF;
+	--ink-faint: #6B7280;
+	--line: #2D3139;
+	--accent: #7C9EFF;
+	--accent-soft: #1E2A4A;
+	--positive: #4ADE80;
+	--positive-soft: #14321F;
+	--negative: #F87171;
+	--negative-soft: #3A1518;
+	--sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+	--mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Consolas, monospace;
+	--chart-accent: #7C9EFF;
+	--chart-palette: #7C9EFF, #5EEAD4, #C4B5FD, #FCA5A5, #FBBF24, #34D399;
+}
+.card::before { display: none; }
+.card { border-radius: 16px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35); }
+details { border-radius: 16px; }
+.section-label { border-left: none; padding-left: 0; }
+.kpi-tile { border-radius: 8px; }
