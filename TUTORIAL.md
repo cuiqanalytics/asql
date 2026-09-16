@@ -6,8 +6,9 @@ self-contained HTML analytics report. You write SQL. `asql` figures out the char
 ## Install
 
 See `README.md`'s **Install** section — `curl | sh`, a manual tarball, or Docker.
-Everywhere below, `asql` means whichever binary/launcher that gave you (in Docker,
-substitute `docker run --rm -v "$PWD:/work" ghcr.io/cuiqanalytics/asql` for `asql`).
+Native binaries are Linux-only for now; on Windows or macOS, use Docker. Everywhere
+below, `asql` means whichever binary/launcher that gave you (in Docker, substitute
+`docker run --rm -v "$PWD:/work" ghcr.io/cuiqanalytics/asql` for `asql`).
 
 ## Your first report
 

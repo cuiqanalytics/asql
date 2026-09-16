@@ -15,6 +15,9 @@ DuckDB, diff in a PR, and hand to the next analyst.
 
 ## Install
 
+**Linux only for now.** Windows and macOS users: skip to **Docker**, below — native
+binaries for those platforms are planned but not yet available.
+
 ```bash
 curl -fsSL https://www.asql.dev/install.sh | sh
 ```
@@ -42,7 +45,8 @@ Prefer a container? See **Docker**, next.
 
 ## Docker
 
-No binary to unpack — pull the image and run it:
+**The recommended path on Windows and macOS**, until native binaries for those platforms
+ship. No binary to unpack — pull the image and run it:
 
 ```bash
 docker pull ghcr.io/cuiqanalytics/asql
