@@ -113,6 +113,11 @@ shares one connection across all blocks, but each preview-mode block editor open
 fresh isolated connection per request and needs to see the setup again. Multiple
 `-- @setup` blocks are allowed and run in document order.
 
+`INSTALL`/`LOAD` work here too — any [DuckDB community
+extension](https://duckdb.org/community_extensions/list_of_extensions) is fair game
+(network access needed at build time only; the built report stays offline). See
+TUTORIAL.md's "Community extensions" section for specific recommendations.
+
 ## `-- @section: <name>` — splits the report into independently laid-out groups
 
 ```sql

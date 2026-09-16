@@ -1,7 +1,7 @@
 # asql, containerized. No binary lives in this repo — the image fetches the same
 # Linux release tarball the docs point users to, so `docker build` works from a clean
 # checkout with nothing pre-staged locally.
-FROM debian:bookworm-slim AS fetch
+FROM debian:trixie-slim AS fetch
 RUN apt-get update \
     && apt-get install -y --no-install-recommends ca-certificates curl \
     && rm -rf /var/lib/apt/lists/*
@@ -9,9 +9,14 @@ RUN curl -fsSL https://github.com/cuiqanalytics/asql/releases/latest/download/as
     | tar xz -C /opt \
     && mv /opt/asql-cli-linux-x86_64 /opt/asql
 
-# The binary is dynamically linked against glibc (verify with `ldd bin/asql` on the
-# extracted tarball), so the final image needs to be glibc-based — not alpine/musl.
-FROM debian:bookworm-slim
+# The binary is dynamically linked against glibc, not statically linked or musl-based
+# (static glibc breaks vduckdb's dlopen() of libduckdb.so - crashes at runtime instead of
+# just failing to start) - so this image's glibc must be >= whatever version the release
+# binary was built against, or you get "version `GLIBC_2.xx' not found". Pinned to
+# trixie because that's what asql's own release-build machine runs; if that ever
+# changes, bump this too (`ldd --version` on the build machine vs. in this image should
+# never show the image behind).
+FROM debian:trixie-slim
 COPY --from=fetch /opt/asql/bin /usr/local/lib/asql/bin
 RUN chmod +x /usr/local/lib/asql/bin/asql
 

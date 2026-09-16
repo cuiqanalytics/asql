@@ -5,22 +5,31 @@ self-contained HTML analytics report. You write SQL. `asql` figures out the char
 
 ## Install
 
-```bash
-v install https://github.com/rodabt/vduckdb   # if you don't already have it
-v -o asql src/app
-```
-
-This produces an `asql` binary. Everywhere below, `asql` means that binary (or
-`v run src/app` if you'd rather not build one).
+See `README.md`'s **Install** section — `curl | sh`, a manual tarball, or Docker.
+Everywhere below, `asql` means whichever binary/launcher that gave you (in Docker,
+substitute `docker run --rm -v "$PWD:/work" ghcr.io/cuiqanalytics/asql` for `asql`).
 
 ## Your first report
 
-Create `revenue.sql`:
+Create `revenue.sql` (this uses inline `VALUES` so it runs with no data file of its
+own — point `read_csv_auto` at a real file once you have one):
 
 ```sql
 -- @report
 -- title: Revenue Dashboard
 -- subtitle: 2026
+
+-- @setup
+CREATE OR REPLACE VIEW orders AS (
+    SELECT * FROM (VALUES
+        ('2026-01-03'::DATE, 'organic', 1200, 'Austin'),
+        ('2026-01-14'::DATE, 'paid',     900, 'Denver'),
+        ('2026-02-02'::DATE, 'organic', 1450, 'Austin'),
+        ('2026-02-19'::DATE, 'referral', 700, 'Seattle'),
+        ('2026-03-05'::DATE, 'paid',    1100, 'Denver'),
+        ('2026-03-21'::DATE, 'organic', 1600, 'Austin')
+    ) AS t(order_date, acquisition_channel, revenue, city)
+);
 
 -- @chart: trend
 -- title: Revenue Trend
@@ -29,7 +38,7 @@ SELECT
     DATE_TRUNC('month', order_date) AS date,
     acquisition_channel AS series,
     SUM(revenue) AS value
-FROM read_csv_auto('orders.csv')
+FROM orders
 GROUP BY 1, 2
 ORDER BY 1;
 
@@ -40,7 +49,7 @@ ORDER BY 1;
 SELECT
     city AS dimension,
     SUM(revenue) AS value
-FROM read_csv_auto('orders.csv')
+FROM orders
 GROUP BY 1
 ORDER BY 2 DESC
 LIMIT 10;
@@ -51,7 +60,7 @@ LIMIT 10;
 
 SELECT
     SUM(revenue) AS value
-FROM read_csv_auto('orders.csv');
+FROM orders;
 ```
 
 Build it:
@@ -792,6 +801,37 @@ ATTACH IF NOT EXISTS 'warehouse.duckdb' AS wh (READ_ONLY);
 -- @chart: trend
 SELECT month, revenue FROM wh.orders;
 ```
+
+### Community extensions
+
+DuckDB's `INSTALL`/`LOAD` also just work in `-- @setup` — asql passes that SQL straight
+through, so any [community extension](https://duckdb.org/community_extensions/list_of_extensions)
+is available the same way `httpfs` is. This needs network access at *build* time only
+(the extension itself, and whatever it then reads); the finished HTML report has no
+DuckDB in it and stays fully offline to view, same as ever.
+
+A few worth knowing about:
+
+```sql
+-- @setup
+INSTALL rusty_sheet; LOAD rusty_sheet;    -- read .xlsx/.ods straight into a report
+
+-- @chart: trend
+SELECT * FROM read_xlsx('data/orders.xlsx');
+```
+
+- `rusty_sheet` — reads Excel/ODS/WPS files directly, no export-to-CSV step.
+- `duck_diff` — diffs two relations by primary key (identical/changed/added/removed +
+  per-column deltas); a natural source query for a `deviation` chart or a
+  "what changed since last snapshot" table.
+- `finetype` — semantic type detection (dates, currencies, emails, etc. from raw
+  strings) — useful for cleaning up messy source columns before asql's own
+  column-name-driven axis inference sees them.
+- `datasketches` — approximate distinct counts and quantile sketches, for `kpi`/
+  `distribution` charts over data too large for exact `COUNT(DISTINCT)`.
+- `stats_duck` — OLS regression, hypothesis tests, and SAS/SPSS/Stata file readers;
+  useful for `experiment_readout`-style reports needing real significance testing
+  behind a `ci` chart, not just descriptive bands.
 
 ## Error handling
 

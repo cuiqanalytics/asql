@@ -16,7 +16,7 @@ DuckDB, diff in a PR, and hand to the next analyst.
 ## Install
 
 ```bash
-curl -fsSL https://cuiqanalytics.github.io/asql/install.sh | sh
+curl -fsSL https://www.asql.dev/install.sh | sh
 ```
 
 No root needed — unpacks to `~/.local/lib/asql` and links `asql` onto your `PATH` at
@@ -98,8 +98,8 @@ reading from this site):
 ```
 asql                  ← run this
 bin/asql              the binary
-bin/libduckdb.so      DuckDB v1.4.4
-bin/DUCKDB_VERSION    the exact DuckDB build this bundle was tested against
+bin/libduckdb.so      matching DuckDB build
+bin/DUCKDB_VERSION    that build's version tag, e.g. "v1.5.5" (cat it to check)
 install-skills.sh     install the Claude Code skills
 TUTORIAL.md           QUICK_REFERENCE.md
 examples/             ready-to-build .sql reports
@@ -113,10 +113,25 @@ skills/               asql + asql-exec skills for Claude Code
 
 **Write `revenue.sql`:**
 
+(Point `read_csv_auto` at your own file — this uses inline `VALUES` instead so the
+example runs with no data file of its own.)
+
 ```sql
 -- @report
 -- title: Revenue Dashboard
 -- subtitle: 2026
+
+-- @setup
+CREATE OR REPLACE VIEW orders AS (
+    SELECT * FROM (VALUES
+        ('2026-01-03'::DATE, 'organic', 1200, 'Austin'),
+        ('2026-01-14'::DATE, 'paid',     900, 'Denver'),
+        ('2026-02-02'::DATE, 'organic', 1450, 'Austin'),
+        ('2026-02-19'::DATE, 'referral', 700, 'Seattle'),
+        ('2026-03-05'::DATE, 'paid',    1100, 'Denver'),
+        ('2026-03-21'::DATE, 'organic', 1600, 'Austin')
+    ) AS t(order_date, acquisition_channel, revenue, city)
+);
 
 -- @chart: trend
 -- title: Monthly Revenue by Channel
@@ -125,7 +140,7 @@ SELECT
     date_trunc('month', order_date) AS date,
     acquisition_channel             AS series,
     sum(revenue)                    AS value
-FROM read_csv_auto('orders.csv')
+FROM orders
 GROUP BY 1, 2
 ORDER BY 1;
 
@@ -133,13 +148,13 @@ ORDER BY 1;
 -- title: Top Cities
 
 SELECT city AS dimension, sum(revenue) AS value
-FROM read_csv_auto('orders.csv')
+FROM orders
 GROUP BY 1 ORDER BY 2 DESC LIMIT 10;
 
 -- @chart: kpi
 -- title: Total Revenue
 
-SELECT sum(revenue) AS value FROM read_csv_auto('orders.csv');
+SELECT sum(revenue) AS value FROM orders;
 ```
 
 **Build it:**

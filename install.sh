@@ -1,7 +1,7 @@
 #!/bin/sh
 # install.sh — download the latest asql release and put it on your PATH.
 #
-#   curl -fsSL https://cuiqanalytics.github.io/asql/install.sh | sh
+#   curl -fsSL https://www.asql.dev/install.sh | sh
 #
 # No root needed: unpacks to ~/.local/lib/asql and symlinks ~/.local/bin/asql to the
 # bundled launcher (which sets LIBDUCKDB_DIR to the copy right next to it — see
