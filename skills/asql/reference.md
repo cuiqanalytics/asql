@@ -180,6 +180,11 @@ on any chart that isn't `trend` or `area`. `flow` rejects `facet`/`target`/`even
 `annotation`/`segment` the same way, but allows `format` (it formats the node/link tooltip
 values, computed in V rather than left to a Vega-Lite encoding).
 
+Every `table` card's column headers are click-to-sort (click again to reverse) — automatic
+on every table, dashboard format only, no annotation needed. A `value`/`metric` or
+`spark`/`sparkline` column sorts by its real underlying number, not by the SVG it renders
+as.
+
 ### Few-style scorecards on `table` / `kpi`
 
 Not a new chart type — `table` and single-value `kpi` cards auto-detect a fixed set of

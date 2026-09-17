@@ -440,7 +440,7 @@ SQL's column names and types — you only override what inference gets wrong.
 | `waterfall` | Cumulative build-up/breakdown | Floating bars from running totals; requires columns literally named `label`, `value`, `is_total` |
 | `flow` | Volume moving between stages/entities | Sankey diagram; edge list requires `source`/`from`, `target`/`to`, and a numeric `value`/`metric` — dashboard only, a cycle or self-loop is a diagnostic |
 | `kpi` | One headline number | A single big number (1 numeric column), a tile row (2–6 columns), or a table (7+) — query must return exactly 1 row |
-| `table` | Anything else | Raw result as a formatted table |
+| `table` | Anything else | Raw result as a formatted table — click a column header to sort by it, click again to reverse |
 
 **`comparison` vs `ranking`.** `comparison` answers "how do these categories compare in
 size?" and sorts by value. `ranking` answers "what is the order?" and leaves your row order

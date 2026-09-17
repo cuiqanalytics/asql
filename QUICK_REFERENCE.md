@@ -184,7 +184,7 @@ ORDER BY 1;
 | `waterfall` | Cumulative build-up/breakdown | Floating bars — `label` (or `dimension`) + `value`; optional `is_total` (else first/last row are the totals) |
 | `flow` | Volume moving between stages/entities | Sankey diagram — edge list: `source`/`from`, `target`/`to`, numeric `value`/`metric`; dashboard only, a cycle or self-loop is a diagnostic |
 | `kpi` | One headline number | Big number (1 col), tile row (2-6 cols), or table (7+) |
-| `table` | Anything else / raw results | Formatted table (auto-paginated if large) |
+| `table` | Anything else / raw results | Formatted table (auto-paginated if large); click a header to sort |
 
 **`auto` decision tree** — 1 row + 1–6 measures → `kpi`; else a temporal column → `trend`;
 else a categorical column → `ranking`; else `table`.

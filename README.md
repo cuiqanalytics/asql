@@ -252,6 +252,8 @@ document instead — a single reading column, static inline charts, a table of c
   re-filters every chart client-side; the selection is a shareable URL. `-- slider:` is the
   same idea as a discrete slider instead of a dropdown, `-- slider-range:` a min/max range
   slider.
+- **Sortable tables** — click any `table` column header to sort by it, click again to
+  reverse. Client-side, no rebuild or annotation needed.
 - **Query cache** — repeat builds skip unchanged queries.
 - **KaTeX** — `$…$` in narrative/markdown prose renders as math.
 
