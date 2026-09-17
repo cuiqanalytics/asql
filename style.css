@@ -8,7 +8,6 @@
   --color-accent: #e1724a;
   --color-accent-hover: #ffb27a;
   --color-accent-dim: #143349;
-  --color-accent-dim-2: #1a4a66;
   --color-link: #ff8a4d;
   --color-divider: color-mix(in srgb, #eaf2fb 16%, transparent);
 
@@ -109,13 +108,6 @@ code, pre { font-family: var(--font-mono); }
   --color-text: var(--color-paper-ink);
   --color-divider: var(--color-paper-divider);
 }
-/* the one bold solid-color block on the page: the primary install command */
-.blueprint--solid {
-  background: var(--color-accent);
-  --color-text: var(--color-bg);
-  --color-divider: color-mix(in srgb, var(--color-bg) 30%, transparent);
-}
-
 /* — eyebrow label — */
 .eyebrow {
   display: flex; align-items: center; gap: 10px;
@@ -159,7 +151,6 @@ code, pre { font-family: var(--font-mono); }
 .install-box { display: flex; align-items: center; gap: 16px; padding: 14px 16px; background: var(--color-panel-dark); }
 .install-cmd { font-size: 15px; color: var(--color-text); white-space: nowrap; }
 .install-cmd .prompt { color: var(--color-navy-400); }
-.blueprint--solid .install-cmd .prompt { color: var(--color-accent-dim); }
 .install-note { font-size: 14px; color: var(--color-navy-300); }
 
 .copy-btn {
@@ -170,10 +161,6 @@ code, pre { font-family: var(--font-mono); }
   background: transparent; color: var(--color-accent);
 }
 .copy-btn:hover { background: var(--color-accent-dim); }
-.blueprint--solid .copy-btn {
-  border-color: var(--color-accent-dim); background: var(--color-accent-dim); color: var(--color-accent);
-}
-.blueprint--solid .copy-btn:hover { background: var(--color-accent-dim-2); }
 
 .docker-note { margin-top: 14px; font-size: 13px; color: var(--color-navy-300); max-width: 640px; }
 .docker-cmd {
