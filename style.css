@@ -173,6 +173,7 @@ code, pre { font-family: var(--font-mono); }
 .site-header {
   position: sticky; top: 0; z-index: 20;
   background: color-mix(in srgb, var(--color-bg) 92%, transparent);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--color-divider);
 }
@@ -258,25 +259,27 @@ code, pre { font-family: var(--font-mono); }
   transform: translateX(calc(var(--carousel-index, 0) * -100% / var(--carousel-count, 2)));
   transition: transform 0.4s cubic-bezier(.22,.61,.36,1);
 }
-.flip-card { flex: 0 0 50%; max-width: 720px; margin: 0 auto; height: 480px; perspective: 1600px; }
+.flip-card { flex: 0 0 50%; max-width: 720px; margin: 0 auto; height: 480px; -webkit-perspective: 1600px; perspective: 1600px; }
 .flip-card-inner {
-  position: relative; width: 100%; height: 100%; transform-style: preserve-3d;
-  transition: transform 0.6s cubic-bezier(.22,.61,.36,1);
+  position: relative; width: 100%; height: 100%;
+  -webkit-transform-style: preserve-3d; transform-style: preserve-3d;
+  transition: -webkit-transform 0.6s cubic-bezier(.22,.61,.36,1), transform 0.6s cubic-bezier(.22,.61,.36,1);
 }
-.flip-card.is-flipped .flip-card-inner { transform: rotateY(180deg); }
+.flip-card.is-flipped .flip-card-inner { -webkit-transform: rotateY(180deg); transform: rotateY(180deg); }
 .flip-card-front, .flip-card-back {
-  position: absolute; inset: 0; backface-visibility: hidden;
+  position: absolute; inset: 0;
+  -webkit-backface-visibility: hidden; backface-visibility: hidden;
   padding: 28px 26px; display: flex; flex-direction: column; overflow: hidden;
 }
 .flip-card-front { background: var(--color-panel-dark); }
 .flip-card.is-flipped .flip-card-front { pointer-events: none; }
 .flip-card-back {
-  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg); transform: rotateY(180deg);
   padding: 18px 18px 16px;
   pointer-events: none;
 }
 .flip-card.is-flipped .flip-card-back { pointer-events: auto; }
-.flip-card-code { flex: 1; overflow: auto; font-size: 13px; }
+.flip-card-code { flex: 1; min-height: 0; overflow: auto; font-size: 13px; -webkit-overflow-scrolling: touch; }
 .flip-btn {
   cursor: pointer; font-family: var(--font-heading); font-weight: 600; font-size: 13px;
   letter-spacing: 0.04em; padding: 8px 14px; align-self: flex-start; margin-top: 14px;
@@ -365,8 +368,13 @@ code, pre { font-family: var(--font-mono); }
   .compiler-inner { padding: 72px 20px 80px; }
   .site-footer { padding: 32px 20px; justify-content: flex-start; }
 
-  .install-cmd { white-space: normal; word-break: break-all; }
-  .install-box { flex-wrap: wrap; }
+  .install-box { flex-wrap: nowrap; width: 100%; max-width: 100%; }
+  .install-cmd {
+    min-width: 0; flex: 1 1 auto;
+    overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+  }
+  .copy-btn { flex: 0 0 auto; }
+  .install-row { width: 100%; }
 
   .carousel-arrow { display: none; }
 }
