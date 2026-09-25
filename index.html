@@ -40,7 +40,8 @@
       <div class="install-note">First dashboard in about 60 seconds.</div>
     </div>
     <p class="docker-note">Windows or macOS? Use Docker below — no binary to unpack, and it’s the recommended path until native binaries for those platforms ship:<pre class="docker-cmd">docker pull ghcr.io/cuiqanalytics/asql
-docker run --rm -v $PWD:/work ghcr.io/cuiqanalytics/asql build report.sql</pre></p>
+docker run --rm -v $PWD:/work ghcr.io/cuiqanalytics/asql build report.sql</pre>Apple Silicon (M1/M2/M3/M4)? The image is <code class="chip">linux/amd64</code> only — add <code class="chip">--platform linux/amd64</code> to the <code class="chip">pull</code> and <code class="chip">run</code> commands above.</p>
+
 
     <div class="demo-grid reveal">
       <div class="blueprint code-panel reveal">
@@ -54,11 +55,11 @@ docker run --rm -v $PWD:/work ghcr.io/cuiqanalytics/asql build report.sql</pre><
 <span class="comment">-- title: Monthly Revenue by Channel</span>
 <span class="blank"> </span>
 <span class="keyword">SELECT</span>
-    date_trunc(<span class="literal">'month'</span>, order_date) <span class="keyword">AS</span> date,
-    acquisition_channel             <span class="keyword">AS</span> series,
-    sum(revenue)                    <span class="keyword">AS</span> value
-<span class="keyword">FROM</span> read_csv_auto(<span class="literal">'orders.csv'</span>)
-<span class="keyword">GROUP BY</span> <span class="literal">1</span>, <span class="literal">2</span>
+    date_trunc(<span class="literal">'month'</span>, d)         <span class="keyword">AS</span> date,
+    channel                        <span class="keyword">AS</span> series,
+    (random() * <span class="literal">90000</span>)::int         <span class="keyword">AS</span> value
+<span class="keyword">FROM</span> range(<span class="literal">DATE '2025-01-01'</span>, <span class="literal">DATE '2026-01-01'</span>, <span class="literal">INTERVAL 1 MONTH</span>) <span class="keyword">AS</span> t(d),
+     (<span class="keyword">VALUES</span> (<span class="literal">'Direct'</span>), (<span class="literal">'Paid'</span>), (<span class="literal">'Partner'</span>)) <span class="keyword">AS</span> c(channel)
 <span class="keyword">ORDER BY</span> <span class="literal">1</span>;</pre>
       </div>
 
@@ -272,7 +273,8 @@ docker run --rm -v $PWD:/work ghcr.io/cuiqanalytics/asql build report.sql</pre><
         <button class="copy-btn" data-copy="curl -fsSL https://www.asql.dev/install.sh | sh">Copy</button>
       </div>
       <p class="docker-note">Windows or macOS? Use Docker below — no binary to unpack, and it’s the recommended path until native binaries for those platforms ship:<pre class="docker-cmd">docker pull ghcr.io/cuiqanalytics/asql
-docker run --rm -v $PWD:/work ghcr.io/cuiqanalytics/asql build report.sql</pre></p>
+docker run --rm -v $PWD:/work ghcr.io/cuiqanalytics/asql build report.sql</pre>Apple Silicon (M1/M2/M3/M4)? The image is <code class="chip">linux/amd64</code> only — add <code class="chip">--platform linux/amd64</code> to the <code class="chip">pull</code> and <code class="chip">run</code> commands above.</p>
+
       <a href="https://github.com/cuiqanalytics/asql/blob/main/TUTORIAL.md" target="_blank" rel="noopener" class="btn btn-ghost-docs">Read the docs</a>
     </div>
   </section>

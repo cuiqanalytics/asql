@@ -52,6 +52,14 @@ ship. No binary to unpack — pull the image and run it:
 docker pull ghcr.io/cuiqanalytics/asql
 ```
 
+**Apple Silicon (M1/M2/M3/M4)?** The image is `linux/amd64` only — add `--platform
+linux/amd64` to every `docker pull`/`docker run` command below:
+
+```bash
+docker pull --platform linux/amd64 ghcr.io/cuiqanalytics/asql
+docker run --rm --platform linux/amd64 -v "$PWD:/work" ghcr.io/cuiqanalytics/asql build revenue.sql
+```
+
 Every `asql` subcommand works the same way: mount the directory holding your `.sql` file
 (and any CSVs it reads) to `/work`, then run the command as if it came after `asql`.
 
@@ -65,7 +73,8 @@ docker run --rm -v "$PWD:/work" ghcr.io/cuiqanalytics/asql build --theme themes/
 reachable through a published port (`-p`) — use a native install for `preview`, Docker
 for everything else.
 
-A shell function saves retyping the mount every time:
+A shell function saves retyping the mount every time (add `--platform linux/amd64` after
+`run --rm` on Apple Silicon):
 
 ```bash
 asql() { docker run --rm -v "$PWD:/work" ghcr.io/cuiqanalytics/asql "$@"; }
