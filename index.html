@@ -55,18 +55,20 @@ docker run --rm -v $PWD:/work ghcr.io/cuiqanalytics/asql build report.sql</pre>A
 <span class="comment">-- title: Monthly Revenue by Channel</span>
 <span class="blank"> </span>
 <span class="keyword">SELECT</span>
-    date_trunc(<span class="literal">'month'</span>, d)         <span class="keyword">AS</span> date,
-    channel                        <span class="keyword">AS</span> series,
-    (random() * <span class="literal">90000</span>)::int         <span class="keyword">AS</span> value
+    date_trunc(<span class="literal">'month'</span>, d)                              <span class="keyword">AS</span> date,
+    channel                                             <span class="keyword">AS</span> series,
+    base + date_diff(<span class="literal">'month'</span>, <span class="literal">DATE '2025-01-01'</span>, d) * growth
+        + (random() * <span class="literal">20000</span>)::int                       <span class="keyword">AS</span> value
 <span class="keyword">FROM</span> range(<span class="literal">DATE '2025-01-01'</span>, <span class="literal">DATE '2026-01-01'</span>, <span class="literal">INTERVAL 1 MONTH</span>) <span class="keyword">AS</span> t(d),
-     (<span class="keyword">VALUES</span> (<span class="literal">'Direct'</span>), (<span class="literal">'Paid'</span>), (<span class="literal">'Partner'</span>)) <span class="keyword">AS</span> c(channel)
+     (<span class="keyword">VALUES</span> (<span class="literal">'Direct'</span>, <span class="literal">190000</span>, <span class="literal">46000</span>),
+             (<span class="literal">'Paid'</span>, <span class="literal">160000</span>, <span class="literal">25000</span>),
+             (<span class="literal">'Partner'</span>, <span class="literal">55000</span>, <span class="literal">26000</span>)) <span class="keyword">AS</span> c(channel, base, growth)
 <span class="keyword">ORDER BY</span> <span class="literal">1</span>;</pre>
       </div>
 
       <div class="blueprint blueprint--paper chart-card reveal">
         <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
         <div class="chart-title">Monthly Revenue by Channel</div>
-        <div class="chart-subtitle">Revenue Dashboard · 2026</div>
         <svg class="chart-svg" data-chart viewBox="0 0 720 300">
           <g class="chart-grid">
             <line x1="60" y1="30" x2="700" y2="30"></line>
@@ -153,9 +155,10 @@ docker run --rm -v $PWD:/work ghcr.io/cuiqanalytics/asql build report.sql</pre>A
 <span class="blank"> </span>
 <span class="comment">-- @markdown</span>
 <span class="blank"> </span>
--- **Recommendation.** Move our two open GTM
--- hires from SMB new-business into Mid-Market
--- expansion, starting next quarter.</pre>
+-- **Recommendation.** Move our two open
+-- go-to-market hires from SMB new-business
+-- into Mid-Market expansion, starting next
+-- quarter.</pre>
                 <button class="flip-btn" data-flip="1">See the output →</button>
               </div>
               <div class="flip-card-back blueprint blueprint--paper">

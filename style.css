@@ -218,8 +218,7 @@ code, pre { font-family: var(--font-mono); }
 .code span[class] {} /* spans without a role class inherit .code color */
 
 .chart-card { background: var(--color-paper); padding: 26px 24px 22px; }
-.chart-title { font-family: var(--font-heading); font-weight: 600; font-size: 19px; margin-bottom: 4px; color: var(--color-paper-ink); }
-.chart-subtitle { font-size: 12px; color: var(--color-paper-ink-dim); margin-bottom: 14px; }
+.chart-title { font-family: var(--font-heading); font-weight: 600; font-size: 19px; margin-bottom: 14px; color: var(--color-paper-ink); }
 .chart-svg { width: 100%; height: auto; display: block; }
 .chart-grid { stroke: #c9d8e6; stroke-width: 1; }
 .chart-baseline { stroke: var(--color-navy-600); stroke-width: 1; }
