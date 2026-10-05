@@ -5,6 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>asql — Write SQL. Get a dashboard.</title>
 <meta name="description" content="asql turns an annotated .sql file into a polished, self-contained HTML dashboard. Runs on an embedded DuckDB engine — no BI tool, no notebook, no server.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.asql.dev/">
+<meta property="og:title" content="asql — Write SQL. Get a dashboard.">
+<meta property="og:description" content="Tell your AI agent the dashboard you want. Get back a SQL file you can read, diff and own.">
+<meta property="og:image" content="https://www.asql.dev/media/asql-hero-poster.jpg">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1080">
+<meta property="og:video" content="https://www.asql.dev/media/asql-hero.mp4">
+<meta property="og:video:type" content="video/mp4">
+<meta property="og:video:width" content="1920">
+<meta property="og:video:height" content="1080">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.asql.dev/media/asql-hero-poster.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
@@ -15,6 +28,7 @@
 <header class="site-header">
   <div class="nav-inner">
     <a href="#top" class="brand">asql</a>
+    <a href="#demo" class="nav-link">Demo</a>
     <a href="#why" class="nav-link">Why asql</a>
     <a href="#compiler" class="nav-link">Compiler, not generator</a>
     <a href="#examples" class="nav-link">Examples</a>
@@ -42,6 +56,16 @@
     <p class="docker-note">Windows or macOS? Use Docker below — no binary to unpack, and it’s the recommended path until native binaries for those platforms ship:<pre class="docker-cmd">docker pull ghcr.io/cuiqanalytics/asql
 docker run --rm -v $PWD:/work ghcr.io/cuiqanalytics/asql build report.sql</pre>Apple Silicon (M1/M2/M3/M4)? The image is <code class="chip">linux/amd64</code> only — add <code class="chip">--platform linux/amd64</code> to the <code class="chip">pull</code> and <code class="chip">run</code> commands above.</p>
 
+
+    <div id="demo" class="video-frame blueprint reveal">
+      <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      <video poster="media/asql-hero-poster.jpg" autoplay muted loop playsinline preload="metadata"
+             aria-label="46-second demo: an AI agent writes an asql .sql file from a CSV, asql previews it as a dashboard, a one-word edit live-reloads the chart, and git diff shows the change">
+        <source src="media/asql-hero-square.mp4" type="video/mp4" media="(max-width: 600px)">
+        <source src="media/asql-hero.mp4" type="video/mp4">
+      </video>
+    </div>
+    <p class="demo-caption">Prompt → readable SQL → dashboard → one-word edit → <span class="accent-text">git diff</span>. 46 seconds, no cuts.</p>
 
     <div class="demo-grid reveal">
       <div class="blueprint code-panel reveal">

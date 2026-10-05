@@ -7,6 +7,12 @@
     var nodes = Array.from(document.querySelectorAll('.reveal'));
     if (reduceMotion || !('IntersectionObserver' in window)) {
       nodes.forEach(function (n) { n.classList.add('is-visible'); });
+      if (reduceMotion) {
+        // no autoplaying motion: show the poster, play on request
+        document.querySelectorAll('.video-frame video').forEach(function (v) {
+          v.removeAttribute('autoplay'); v.pause(); v.controls = true;
+        });
+      }
       return;
     }
     nodes.forEach(function (n, i) {

@@ -1,1 +1,4 @@
 dist/
+# video-production sources (build scripts, stage, assets, drafts); only the published media/* files ship
+media/hero/
+MEDIA_ACTIONS.md

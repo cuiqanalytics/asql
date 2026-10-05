@@ -6,7 +6,9 @@
 HTML analytics report. You write the query. `asql` picks the right chart, lays out the
 page, and renders it — no BI tool, no notebook, no JavaScript, no `<div>` wrangling.
 
-![An asql dashboard](images/dashboard.png)
+[![asql demo: an agent writes the SQL, asql renders the dashboard, git diff shows the edit](media/asql-hero-diff.gif)](https://www.asql.dev/#demo)
+
+*46-second demo at [asql.dev](https://www.asql.dev/#demo).*
 
 The entire source for a report like this is a plain `.sql` file you can run through
 DuckDB, diff in a PR, and hand to the next analyst.
