@@ -80,7 +80,8 @@ main > section.wrap + section.wrap { padding-top: 0; }
 .site-header { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent);
   backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
 .nav { width: min(1180px, 100% - 32px); margin-inline: auto; height: 60px; display: flex; align-items: center; gap: 24px; }
-.brand { font: 800 26px/1 var(--display); font-stretch: 125%; letter-spacing: -0.03em; color: var(--text); text-decoration: none; }
+.brand { display: inline-flex; align-items: center; gap: 10px; font: 800 26px/1 var(--display); font-stretch: 125%; letter-spacing: -0.03em; color: var(--text); text-decoration: none; }
+.brand img { flex: none; width: 28px; height: 28px; }
 .nav-links { display: flex; gap: 22px; margin-left: 12px; }
 .nav-links a { color: var(--muted); text-decoration: none; font-size: 15px; font-weight: 500; }
 .nav-links a:hover { color: var(--text); }
