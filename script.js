@@ -1,105 +1,80 @@
-(function () {
-  'use strict';
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function initScrollReveal() {
-    var nodes = Array.from(document.querySelectorAll('.reveal'));
-    if (reduceMotion || !('IntersectionObserver' in window)) {
-      nodes.forEach(function (n) { n.classList.add('is-visible'); });
-      if (reduceMotion) {
-        // no autoplaying motion: show the poster, play on request
-        document.querySelectorAll('.video-frame video').forEach(function (v) {
-          v.removeAttribute('autoplay'); v.pause(); v.controls = true;
-        });
-      }
-      return;
-    }
-    nodes.forEach(function (n, i) {
-      n.style.transitionDelay = (i % 4) * 70 + 'ms';
+  if (reduceMotion) {
+    document.querySelectorAll('.video-frame video').forEach((v) => {
+      v.removeAttribute('autoplay'); v.pause(); v.controls = true;
     });
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          io.unobserve(entry.target);
-        }
-      });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
-    nodes.forEach(function (n) { io.observe(n); });
-    setTimeout(function () {
-      nodes.forEach(function (n) { n.classList.add('is-visible'); });
-    }, 2500);
   }
 
-  function initChartDraw() {
-    var charts = document.querySelectorAll('[data-chart]');
-    if (!charts.length) return;
-    if (reduceMotion) {
-      charts.forEach(function (c) { c.classList.add('is-drawn'); });
-      return;
-    }
-    var cio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
+  document.querySelectorAll('[data-tabs]').forEach((box) => {
+    const tabs = [...box.querySelectorAll('[role="tab"]')];
+    const select = (tab) => {
+      tabs.forEach((t) => {
+        const on = t === tab;
+        t.setAttribute('aria-selected', on);
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+      });
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(t));
+      t.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+        select(next); next.focus();
+      });
+    });
+    if (/Mac|Win/.test(navigator.platform || '')) select(tabs[1]);
+  });
+
+  document.querySelectorAll('.copy').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(btn.dataset.copy); } catch {
+        const ta = Object.assign(document.createElement('textarea'), { value: btn.dataset.copy });
+        document.body.append(ta); ta.select(); document.execCommand('copy'); ta.remove();
+      }
+      btn.textContent = 'Copied'; btn.classList.add('done');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600);
+    });
+  });
+
+  // draw the hero chart's lines once it scrolls into view
+  const charts = document.querySelectorAll('[data-chart]');
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    charts.forEach((c) => c.classList.add('is-drawn'));
+  } else {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
         entry.target.classList.add('is-drawn');
-        cio.unobserve(entry.target);
+        io.unobserve(entry.target);
       });
     }, { threshold: 0.3 });
-    charts.forEach(function (c) { cio.observe(c); });
+    charts.forEach((c) => io.observe(c));
   }
 
-  function initCopyButtons() {
-    document.querySelectorAll('[data-copy]').forEach(function (btn) {
-      var defaultLabel = btn.textContent;
-      var timer;
-      btn.addEventListener('click', function () {
-        var cmd = btn.getAttribute('data-copy');
-        if (navigator.clipboard) navigator.clipboard.writeText(cmd).catch(function () {});
-        btn.textContent = 'Copied';
-        clearTimeout(timer);
-        timer = setTimeout(function () { btn.textContent = defaultLabel; }, 1600);
-      });
-    });
-  }
-
-  function initFlipCardsAndCarousel() {
-    var track = document.querySelector('.carousel-track');
-    if (!track) return;
-    var slides = document.querySelectorAll('.flip-card');
-    var dots = document.querySelectorAll('.carousel-dot');
+  // examples: flip cards inside a two-slide carousel
+  const track = document.querySelector('.carousel-track');
+  if (track) {
+    const slides = document.querySelectorAll('.flip-card');
+    const dots = document.querySelectorAll('.carousel-dot');
+    let current = 0;
     track.style.setProperty('--carousel-count', slides.length);
-
-    function goTo(index) {
-      var next = (index + slides.length) % slides.length;
-      track.style.setProperty('--carousel-index', next);
-      dots.forEach(function (dot, i) {
-        dot.classList.toggle('is-active', i === next);
-      });
-    }
-
-    document.addEventListener('click', function (e) {
-      var flipBtn = e.target.closest('.flip-btn');
-      if (flipBtn) {
-        var card = flipBtn.closest('.flip-card');
-        if (card) card.classList.toggle('is-flipped');
-        return;
+    const goTo = (index) => {
+      current = (index + slides.length) % slides.length;
+      track.style.setProperty('--carousel-index', current);
+      dots.forEach((dot, i) => dot.classList.toggle('is-active', i === current));
+    };
+    document.addEventListener('click', (e) => {
+      const flipBtn = e.target.closest('.flip-btn');
+      if (flipBtn) { flipBtn.closest('.flip-card').classList.toggle('is-flipped'); return; }
+      if (e.target.closest('.carousel-prev')) goTo(current - 1);
+      else if (e.target.closest('.carousel-next')) goTo(current + 1);
+      else {
+        const dot = e.target.closest('.carousel-dot');
+        if (dot) goTo(Number(dot.dataset.goto));
       }
-      var prevBtn = e.target.closest('.carousel-prev');
-      var nextBtn = e.target.closest('.carousel-next');
-      var dotBtn = e.target.closest('.carousel-dot');
-      if (!prevBtn && !nextBtn && !dotBtn) return;
-      var current = parseInt(track.style.getPropertyValue('--carousel-index') || '0', 10);
-      if (prevBtn) goTo(current - 1);
-      else if (nextBtn) goTo(current + 1);
-      else goTo(parseInt(dotBtn.getAttribute('data-goto'), 10));
     });
   }
-
-  document.addEventListener('DOMContentLoaded', function () {
-    initScrollReveal();
-    initChartDraw();
-    initCopyButtons();
-    initFlipCardsAndCarousel();
-  });
 })();

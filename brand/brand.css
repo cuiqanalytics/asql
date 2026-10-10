@@ -1,0 +1,152 @@
+/* cuiqanalytics brand system: shared by cuiqanalytics.com, rgen, qdata and asql.
+   Source of truth: cuiqanalytics.github.io/brand/. Product sites carry a copy made by
+   sync-brand.sh; edit here, then sync. Fog paper, Ink type, Cobalt structure, Marigold data,
+   Ember reports, Rose for broken data. Each page sets <html data-product="..."> for its accent. */
+:root {
+  --bg: #eef0f4;
+  --surface: #ffffff;
+  --sunk: #e3e6ee;
+  --text: #16182b;
+  --muted: #555b7d;
+  --line: #d3d7e3;
+  --cobalt: #3046f0;
+  --cobalt-ink: #2236c9;
+  --marigold: #f5a524;
+  --marigold-ink: #9a5d00;
+  --rose: #c8304c;
+  --rose-bg: #fbe3e8;
+  --term-bg: #16182b;
+  --term-text: #e8eaf3;
+  --term-dim: #9aa0c3;
+  --term-ok: #6fdcaa;
+  --term-key: #8e9cff;
+  --term-str: #9fe3c0;
+  --pro-bg: #f5a524;
+  --pro-text: #16182b;
+  --bead: #f5a524;
+  --peg: #3046f0;
+  --display: "Archivo", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --radius: 10px;
+  --ember: #e1724a;
+  --ember-ink: #b04a1f;
+  --accent: var(--cobalt);
+  --accent-ink: var(--cobalt-ink);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14162a; --surface: #1c1f38; --sunk: #101224; --text: #eef0f4; --muted: #a3a8c9; --line: #2e3256;
+    --cobalt: #8e9cff; --cobalt-ink: #aab5ff; --marigold-ink: #f5b84a; --rose: #ff8098; --rose-bg: #3a1a26;
+    --term-bg: #0e1020; --peg: #8e9cff; --ember-ink: #ff9a6b; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14162a; --surface: #1c1f38; --sunk: #101224; --text: #eef0f4; --muted: #a3a8c9; --line: #2e3256;
+  --cobalt: #8e9cff; --cobalt-ink: #aab5ff; --marigold-ink: #f5b84a; --rose: #ff8098; --rose-bg: #3a1a26;
+  --term-bg: #0e1020; --peg: #8e9cff; --ember-ink: #ff9a6b; color-scheme: dark;
+}
+
+:root[data-product="rgen"]  { --accent: var(--marigold); --accent-ink: var(--marigold-ink); }
+:root[data-product="qdata"] { --accent: var(--cobalt);   --accent-ink: var(--cobalt-ink); }
+:root[data-product="asql"]  { --accent: var(--ember);    --accent-ink: var(--ember-ink); }
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 400 17px/1.6 var(--display); font-stretch: 100%;
+  overflow-x: hidden;
+}
+img, svg, video, canvas { display: block; max-width: 100%; }
+a { color: var(--cobalt-ink); text-underline-offset: 3px; }
+:focus-visible { outline: 3px solid var(--marigold); outline-offset: 2px; border-radius: 4px; }
+code { font-family: var(--mono); font-size: 0.88em; background: var(--sunk); padding: 0.1em 0.35em; border-radius: 4px; }
+h1, h2, h3 { margin: 0; line-height: 1.05; font-weight: 780; letter-spacing: -0.015em; }
+h2 { font-size: clamp(30px, 4vw, 46px); font-stretch: 112%; max-width: 22ch; }
+h2 code { font-size: 0.8em; background: none; padding: 0; color: var(--cobalt-ink); }
+h3 { font-size: 22px; font-stretch: 110%; }
+p { margin: 0; }
+[hidden] { display: none !important; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.skip { position: absolute; left: -999px; top: 8px; background: var(--text); color: var(--bg); padding: 8px 14px; border-radius: 6px; z-index: 20; }
+.skip:focus { left: 8px; }
+
+.wrap { width: min(1180px, 100% - 32px); margin-inline: auto; }
+main > section { padding-block: clamp(64px, 9vw, 120px); }
+main > section.wrap + section.wrap { padding-top: 0; }
+
+/* ---------- header ---------- */
+.site-header { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.nav { width: min(1180px, 100% - 32px); margin-inline: auto; height: 60px; display: flex; align-items: center; gap: 24px; }
+.brand { font: 800 26px/1 var(--display); font-stretch: 125%; letter-spacing: -0.03em; color: var(--text); text-decoration: none; }
+.nav-links { display: flex; gap: 22px; margin-left: 12px; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 15px; font-weight: 500; }
+.nav-links a:hover { color: var(--text); }
+.theme-toggle { margin-left: auto; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line);
+  background: transparent; color: var(--muted); display: grid; place-items: center; cursor: pointer; }
+.theme-toggle:hover { color: var(--text); }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 42px; padding: 0 20px; border-radius: 999px;
+  font: 650 15px var(--display); font-stretch: 108%; text-decoration: none; cursor: pointer; border: 2px solid var(--cobalt); }
+.btn-solid { background: var(--cobalt); color: #fff; }
+:root[data-theme="dark"] .btn-solid { color: #14162a; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn-solid { color: #14162a; } }
+.btn-outline { background: transparent; color: var(--cobalt-ink); }
+.btn:hover { filter: brightness(1.08); }
+@media (max-width: 900px) { .nav-links { display: none; } }
+
+
+/* ---------- install command ---------- */
+.cmd { display: flex; align-items: center; gap: 12px; background: var(--term-bg); color: var(--term-text); border-radius: var(--radius);
+  padding: 12px 12px 12px 18px; min-width: 0; }
+.cmd code { background: none; padding: 0; color: inherit; font-size: 15px; white-space: nowrap; overflow-x: auto; flex: 1; min-width: 0; scrollbar-width: none; }
+.cmd code::-webkit-scrollbar { display: none; }
+.sigil { color: var(--marigold); margin-right: 0.7em; user-select: none; }
+.copy { flex: none; font: 600 13px var(--display); color: var(--term-text); background: #ffffff14; border: 1px solid #ffffff26;
+  border-radius: 6px; padding: 6px 12px; cursor: pointer; }
+.copy:hover { background: #ffffff24; }
+.copy.done { color: var(--term-ok); border-color: currentColor; }
+
+/* ---------- footer ---------- */
+.site-footer { background: var(--term-bg); color: var(--term-text); padding-block: 56px 28px; }
+.site-footer .brand { color: #f2f3f8; }
+.footer-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 28px 40px; align-items: center; }
+.footer-note { margin-top: 8px; color: var(--term-dim); font-size: 14px; }
+.site-footer .cmd { background: #ffffff0d; }
+.footer-links { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px 26px; padding-top: 24px; border-top: 1px solid #ffffff1a; }
+.footer-links a { color: var(--term-text); font-size: 14px; text-decoration: none; }
+.footer-links a:hover { text-decoration: underline; }
+.copyright { margin-top: 40px; font-size: 13px; color: var(--term-dim); }
+@media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr; } }
+
+/* ---------- family top bar (same on every cuiqanalytics site) ---------- */
+.cq-bar { background: var(--term-bg); color: var(--term-dim); font: 500 13px/1 var(--display); }
+.cq-bar-in { width: min(1180px, 100% - 32px); margin-inline: auto; height: 36px; display: flex; align-items: center; gap: 18px; }
+.cq-logo { display: inline-flex; align-items: center; gap: 8px; color: #f2f3f8; text-decoration: none; font-weight: 600;
+  font-stretch: 110%; letter-spacing: -0.01em; white-space: nowrap; }
+.cq-logo img, .cq-logo svg { width: 18px; height: 18px; flex: none; }
+.cq-logo b { font-weight: 800; }
+.cq-products { display: flex; gap: 4px; margin-left: auto; }
+.cq-products a { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px;
+  color: var(--term-dim); text-decoration: none; font-family: var(--mono); font-size: 12.5px; }
+.cq-products a:hover { color: #f2f3f8; background: #ffffff12; }
+.cq-products a[aria-current="page"] { color: #f2f3f8; background: #ffffff1a; }
+.cq-products .dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+.dot-rgen { background: #f5a524; } .dot-qdata { background: #8e9cff; } .dot-asql { background: #e1724a; }
+@media (max-width: 420px) { .cq-bar-in { gap: 8px; } .cq-products a { padding: 5px 7px; } .cq-products .dot { display: none; } }
+
+/* ---------- family footer row (inside .site-footer) ---------- */
+.cq-footer { margin-top: 44px; padding-top: 28px; border-top: 1px solid #ffffff1a; display: grid;
+  grid-template-columns: minmax(0, 0.9fr) repeat(3, minmax(0, 1fr)); gap: 20px 28px; align-items: start; }
+.cq-footer .cq-logo { font-size: 16px; }
+.cq-footer .cq-logo img, .cq-footer .cq-logo svg { width: 22px; height: 22px; }
+.cq-footer-note { margin-top: 10px; font-size: 13px; color: var(--term-dim); max-width: 30ch; }
+.cq-prod { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 2px 10px; color: var(--term-text); text-decoration: none; }
+.cq-prod img { grid-row: span 2; width: 28px; height: 28px; }
+.cq-prod b { font: 700 15px/1.2 var(--mono); }
+.cq-prod span { font-size: 13px; line-height: 1.4; color: var(--term-dim); }
+.cq-prod:hover b { text-decoration: underline; }
+.cq-prod[aria-current="page"] b::after { content: " · you are here"; font: 400 12px var(--display); color: var(--term-dim); }
+@media (max-width: 900px) { .cq-footer { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .cq-footer { grid-template-columns: minmax(0, 1fr); } }
