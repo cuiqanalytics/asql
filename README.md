@@ -15,6 +15,25 @@ DuckDB, diff in a PR, and hand to the next analyst.
 
 ---
 
+## Why asql when AI can build dashboards?
+
+AI assistants now build dashboards on request, and they're great for exploring a
+question. asql is for what comes after you have the answer. AI assistants answer the
+question; asql ships the answer, on your infrastructure.
+
+- **Self-hosted, end to end.** Queries run in DuckDB on your machine or server. Nothing in
+  the build or the output calls a vendor. Rebuild from cron or CI with the Docker image,
+  then publish on an intranet, a bucket or a file share. Works air-gapped. If you have an
+  AI agent write the SQL, that agent sees whatever you show it. asql itself never does.
+- **The query *is* the dashboard.** Other tools show the SQL behind a chart. In asql the
+  SQL is the source, and the chart is compiled from it.
+- **A compiler, not a generator.** The same `.sql` builds the same HTML every time, and
+  `git diff report.sql` is the review.
+- **No seat to view it.** The output is one static `.html` file: email it, commit it, open
+  it in five years.
+
+---
+
 ## Install
 
 **Linux only for now.** Windows and macOS users: skip to **Docker**, below — native

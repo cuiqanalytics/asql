@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>asql — Write SQL. Get a dashboard.</title>
-<meta name="description" content="asql turns an annotated .sql file into a polished, self-contained HTML dashboard. Runs on an embedded DuckDB engine — no BI tool, no notebook, no server.">
+<meta name="description" content="asql turns an annotated .sql file into a polished, self-contained HTML dashboard. Runs on an embedded DuckDB engine — no BI tool, no notebook, no server, no vendor. Self-hosted by default.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.asql.dev/">
 <meta property="og:title" content="asql — Write SQL. Get a dashboard.">
@@ -265,15 +265,23 @@
   <section id="compiler" class="compiler">
     <div class="wrap">
       <h2>It's a compiler, not a generator.</h2>
-      <p class="section-lede">Why not just ask an AI to build me a dashboard? You can prompt an AI app builder for one and get it. asql is a different kind of tool.</p>
+      <p class="section-lede">AI assistants now build dashboards on request, and they're great for exploring a question. asql is for what comes after you have the answer: a report that has to be reproducible, reviewed, shared with people who don't have a seat, and hosted where your data lives. AI assistants answer the question. asql ships the answer, on your infrastructure.</p>
       <div class="compiler-grid">
+        <div class="compiler-item">
+          <h3>Self-hosted, end to end.</h3>
+          <p>Queries run in DuckDB on your machine or server, against your files or attached databases. Nothing in the build or the output calls a vendor. Rebuild from cron or CI with the Docker image, publish on an intranet or a bucket. Works air-gapped.</p>
+        </div>
+        <div class="compiler-item">
+          <h3>The query <em>is</em> the dashboard.</h3>
+          <p>Other tools show you the SQL behind a chart so you can check it. In asql the SQL is the source, and the chart is compiled from it.</p>
+        </div>
         <div class="compiler-item">
           <h3>Same input, same output, every time.</h3>
           <p>A prompt-generated dashboard is a fresh one-off each time you ask. Re-run it and you may get a different layout, different chart choices, different code. <code>asql build report.sql</code> renders the same result every time.</p>
         </div>
         <div class="compiler-item">
           <h3>Still just SQL, not a new app to maintain.</h3>
-          <p>A generated dashboard is a new codebase (React, config, glue) that only the AI that wrote it really understands. Changing an asql report means editing the query you already had.</p>
+          <p>A generated dashboard is either a new codebase (React, config, glue) that only the AI that wrote it really understands, or it lives inside someone else's app. Changing an asql report means editing the query you already had.</p>
         </div>
         <div class="compiler-item">
           <h3>Diffable and reviewable.</h3>
@@ -281,7 +289,7 @@
         </div>
         <div class="compiler-item">
           <h3>No runtime you depend on.</h3>
-          <p>One static <code>.html</code> file: no hosted app, no vendor account to view it, no server in the loop. Open it in five years.</p>
+          <p>One static <code>.html</code> file: no hosted app, no seat or vendor account to view it, no server in the loop. Open it in five years.</p>
         </div>
       </div>
     </div>
@@ -318,7 +326,7 @@
   <section id="grows" class="wrap grows">
     <h2>It grows with you.</h2>
     <p class="section-lede">Today asql is free, runs on your machine, and leaves nothing behind but a file you own. That isn't a limitation to be fixed later; it's the foundation.</p>
-    <p class="section-lede">The same annotated SQL that builds a file on your laptop is what will keep a hosted dashboard current on a schedule. Same input, more places to put the output.</p>
+    <p class="section-lede">The same annotated SQL that builds a file on your laptop is what will keep a dashboard current on a schedule, on servers you run. Same input, more places to put the output.</p>
     <div class="grows-cta">
       <div class="cmd">
         <code><span class="sigil" aria-hidden="true">$</span>curl -fsSL https://www.asql.dev/install.sh | sh</code>
