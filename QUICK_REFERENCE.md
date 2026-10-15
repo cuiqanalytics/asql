@@ -10,12 +10,22 @@ block type, key, and flag with an inline example — see `TUTORIAL.md` for a wal
 asql build report.sql                          # writes report.html next to it
 asql build --fresh report.sql                  # ignore the query-result cache
 asql build --theme themes/midnight.css report.sql
+asql build --var client=acme --out out/acme.html report.sql   # parameterized build
+asql build --var-env tok=API_TOKEN report.sql   # secret variable from the environment
 asql preview report.sql                        # live-reload dev server, default port 4321
 asql preview --port 4321 report.sql
 asql preview --theme themes/sepia.css report.sql
 asql query query.sql                           # run a flat .sql file, print rows as a table
 asql query --format csv query.sql              # ...as CSV
 ```
+
+`--var name=value` (repeatable, also on `preview`) sets a DuckDB variable before `@setup`
+runs: read it in SQL with `getvariable('name')` and in titles/prose with `{{ var.name }}`.
+Default it in `@setup` with `SET VARIABLE name = COALESCE(getvariable('name'), 'demo');`.
+Values are text, so cast as needed (`getvariable('month')::DATE`). `--var-env name=ENVVAR`
+is the same but reads an environment variable and is treated as a secret: SQL only,
+redacted from the output, at least 8 characters. `--out`/`-o` sets the output path. See
+TUTORIAL.md, "Parameters".
 
 Flags go **before** the file path (`asql preview report.sql --port 4321` silently falls back
 to the default port instead of erroring).

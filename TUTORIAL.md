@@ -834,6 +834,70 @@ SELECT * FROM read_xlsx('data/orders.xlsx');
   useful for `experiment_readout`-style reports needing real significance testing
   behind a `ci` chart, not just descriptive bands.
 
+## Parameters: one report, many builds
+
+Build the same `.sql` for each client, region or month, without copying the file. Each
+`--var name=value` becomes a [DuckDB variable](https://duckdb.org/docs/stable/sql/statements/set_variable):
+read it in SQL with `getvariable('name')`, and in report text (titles, subtitles, prose)
+with `{{ var.name }}`.
+
+```sql
+-- @setup
+SET VARIABLE client = COALESCE(getvariable('client'), 'demo');   -- default when no --var
+
+-- @report
+-- title: {{ var.client }} — Monthly Review
+
+-- @chart: trend
+-- title: Revenue for {{ var.client }}
+
+SELECT month AS date, sum(revenue) AS value
+FROM read_csv_auto('data/orders.csv')
+WHERE client = getvariable('client')
+GROUP BY 1 ORDER BY 1;
+```
+
+```bash
+asql build report.sql                                   # client = demo (the @setup default)
+asql build --var client=acme --out out/acme.html report.sql
+for c in acme globex initech; do
+  asql build --var client=$c --out out/$c.html report.sql
+done
+```
+
+- Because variables are plain DuckDB, the file stays valid SQL: `duckdb < report.sql` still
+  runs and picks up the `@setup` default.
+- `--var` values are set before your `@setup` runs, which is why the `COALESCE` default
+  pattern works. Without a default, a `{{ var.name }}` with no `--var` fails the build
+  with a message naming the variable.
+- Values are text. Cast them where you need another type:
+  `getvariable('month')::DATE`. They work in table functions too:
+  `read_csv_auto(getvariable('path'))`.
+- `--out`/`-o` sets the output path (its directory is created if needed); the default is
+  still `report.html` next to the source.
+- `asql preview` takes the same `--var` flags. The in-browser editor always shows and
+  saves the placeholders, never the substituted values.
+
+### Credentials stay out of the file
+
+A self-hosted report that reads a production database needs credentials, and those should
+never be committed with the `.sql`. Ways that work:
+
+- **DuckDB persistent secrets.** Create the secret once per machine with the DuckDB CLI
+  (`CREATE PERSISTENT SECRET ...`); asql loads it automatically, and the report only
+  names the database.
+- **libpq environment variables for Postgres.** Set `PGHOST`, `PGUSER`, `PGPASSWORD`, …
+  in the environment that runs the build, then
+  `ATTACH '' AS pg (TYPE postgres, READ_ONLY);` in `-- @setup`.
+- **`--var-env name=ENVVAR`** sets a variable from an environment variable, for use in
+  SQL as `getvariable('name')` (an API token in a URL, for example). Its value is treated
+  as a secret: it is redacted as `[redacted]` from the HTML and from error messages,
+  it can't be used in `{{ var.name }}` text, and it must be at least 8 characters long.
+
+Known limitation: a `CREATE SECRET` statement inside `-- @setup` currently stops the
+statements after it from returning results, so every chart breaks. Use one of the
+patterns above instead.
+
 ## Error handling
 
 A broken block (bad SQL, a chart intent that doesn't fit the data, a narrative with an

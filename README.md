@@ -274,8 +274,13 @@ document instead — a single reading column, static inline charts, a table of c
 ./asql query --format csv revenue.sql # …as CSV
 ./asql build --theme themes/midnight.css revenue.sql   # restyle via CSS variables
 ./asql build --fresh revenue.sql      # ignore the query cache
+./asql build --var client=acme -o out/acme.html report.sql   # one template, many reports
 ```
 
+- **Parameters** — `--var client=acme` sets a DuckDB variable: `getvariable('client')` in
+  SQL, `{{ var.client }}` in titles and prose. Loop over clients or months to build each
+  report from one `.sql` file. `--var-env` reads a secret from the environment and keeps
+  it out of the output.
 - **Themes** — a small `:root` CSS file overrides colours, fonts, chart palette. Five
   ship in `themes/`.
 - **Interactive filters** — `-- filter: region` renders a sticky dropdown that

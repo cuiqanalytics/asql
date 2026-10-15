@@ -320,6 +320,48 @@ ship in asql's own repo under `themes/` (`midnight`, `sepia`, `nordic`, `forest`
 copy one and tweak it, or write a `:root { ... }` block from scratch. Only relevant when
 the user asks for custom colors/branding on a report.
 
+## Parameters (`--var`) and secrets (`--var-env`)
+
+Use these when the same report is wanted per client, region or period. Don't copy the
+`.sql` file. `--var name=value` sets a DuckDB variable before `@setup` runs:
+
+- **SQL:** read it with `getvariable('name')`.
+- **Titles, subtitles, prose, section labels:** use `{{ var.name }}`.
+- **Default:** set it in `@setup` so a flagless build and plain `duckdb < report.sql` still
+  work.
+
+```sql
+-- @setup
+SET VARIABLE client = COALESCE(getvariable('client'), 'demo');
+
+-- @report
+-- title: {{ var.client }} — Monthly Review
+
+-- @chart: kpi
+-- title: Revenue
+SELECT sum(revenue) AS value FROM read_csv_auto('data/orders.csv')
+WHERE client = getvariable('client');
+```
+
+```bash
+asql build --var client=acme --out out/acme.html report.sql
+```
+
+- **Types:** values are text, so cast them (`getvariable('month')::DATE`). They work as
+  table-function arguments too (`read_csv_auto(getvariable('path'))`).
+- **Missing values:** a `{{ var.x }}` with neither a `--var` nor a default fails the build
+  with "variable 'x' is not set".
+- **`{{ ... }}` without `var.`** is still a narrative column reference.
+- **`--var-env name=ENVVAR`** reads the value from an environment variable and treats it
+  as a secret:
+  - SQL only; it is refused in `{{ var.name }}` text;
+  - redacted from the output;
+  - at least 8 characters.
+- **Never write credentials into the `.sql` file.** Use DuckDB persistent secrets (created
+  once with the DuckDB CLI), libpq env vars (`PGHOST`/`PGPASSWORD` with
+  `ATTACH '' AS pg (TYPE postgres)`), or `--var-env`.
+- **Don't put `CREATE SECRET` in `@setup`:** it currently breaks every chart after it.
+
 ## Viewing a built report (dashboard format)
 
 Every chart card has a small "..." button next to its title (dashboard format only, since

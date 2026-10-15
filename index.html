@@ -46,6 +46,7 @@
     <div class="nav-links">
       <a href="#demo">Demo</a>
       <a href="#build">How it works</a>
+      <a href="#preview">Live preview</a>
       <a href="#examples">Examples</a>
       <a href="#why">Why asql</a>
       <a href="#compiler">Compiler, not generator</a>
@@ -156,6 +157,18 @@
 <span class="t-k">ORDER BY</span> <span class="t-n">1</span>;</code></pre>
       <pre class="terminal"><code><span class="sigil">$</span> asql build report.sql
 <span class="ok">Wrote report.html</span></code></pre>
+    </div>
+  </section>
+
+  <section id="preview" class="wrap split split-flip">
+    <div class="split-text">
+      <h2>See it while you write it.</h2>
+      <p><code>asql preview report.sql</code> serves the report on <code>localhost:4321</code>. Every save rebuilds it and reloads the open tab. No build step, no refresh.</p>
+      <p>A broken query shows its error in place of the chart and recovers on your next save. Each chart has an <b>✎ Edit</b> button: change its chart type, SQL or metadata in the browser, and asql writes the change back to your <code>.sql</code> file.</p>
+    </div>
+    <div class="split-demo">
+      <pre class="terminal"><code><span class="sigil">$</span> asql preview report.sql
+<span class="ok">Serving http://localhost:4321 — watching report.sql for changes</span></code></pre>
     </div>
   </section>
 

@@ -36,7 +36,8 @@ controls and `layout: tabs` sections (dashboard), click-to-sort `table` columns
 (automatic, no annotation needed), Few-style scorecard decorations
 (`lights`, `status`/`target`/`delta`/`spark` columns) on `table`/`kpi`, report/section
 metadata, shared setup SQL (`@setup`, so you're not repeating the same CTE in every
-block), or theming — read `reference.md` in this skill's directory before guessing at
+block), parameterized builds (`--var`/`getvariable`/`{{ var.x }}`, one report per client or
+period), credentials/secrets, or theming — read `reference.md` in this skill's directory before guessing at
 syntax.
 
 ## Minimal example
