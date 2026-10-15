@@ -309,4 +309,4 @@ self-contained:
 
 ## License
 
-Proprietary — © 2026 cuiqanalytics. See `LICENSE`.
+Free to use; the source code is proprietary. © 2026 cuiqanalytics. See `LICENSE`.

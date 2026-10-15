@@ -1,13 +1,23 @@
-asql — Proprietary Software License
+asql — Freeware License
 
 Copyright (c) 2026 cuiqanalytics. All rights reserved.
 
-This software and its accompanying files (the "Software") are the confidential
-and proprietary property of cuiqanalytics. The Software is licensed, not sold.
+This software and its accompanying files (the "Software") are the proprietary
+property of cuiqanalytics. The Software is licensed, not sold. The source code
+of the Software is not part of this license and is not made available.
 
-No license or right to use, copy, modify, merge, publish, distribute, sublicense,
-sell, reverse engineer, decompile, or disassemble the Software, in whole or in
-part, is granted except under a separate written agreement with cuiqanalytics.
+cuiqanalytics grants you a free, non-exclusive, non-transferable license to
+download, install and use the Software, in the form cuiqanalytics distributes
+it (the release archive, the install script and the Docker image), on any
+number of machines.
+
+You may not:
+  - reverse engineer, decompile or disassemble the Software, except where
+    applicable law expressly permits it despite this restriction;
+  - modify the Software or create derivative works of it;
+  - sell, rent, lease or sublicense the Software, or redistribute it except
+    unmodified copies of the official release, free of charge, with this
+    license included.
 
 Reports and other output files that you generate with the Software are yours.
 
