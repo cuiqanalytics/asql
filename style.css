@@ -154,3 +154,9 @@
 :root[data-theme="dark"] .bubble.you { color: #14162a; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .bubble.you { color: #14162a; } }
 .bubble.claude { background: var(--surface); border: 1px solid var(--line); border-bottom-left-radius: 4px; }
+
+/* ---------- FAQ ---------- */
+.faq-list { margin-top: 32px; border-top: 2px solid var(--text); }
+.faq details { border-bottom: 1px solid var(--line); padding: 18px 0; }
+.faq summary { cursor: pointer; font-weight: 650; font-size: 18px; list-style-position: outside; }
+.faq details p { margin-top: 12px; color: var(--muted); max-width: 72ch; }
