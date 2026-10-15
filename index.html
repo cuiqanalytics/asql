@@ -360,6 +360,7 @@
       <details><summary>How is this different from a BI tool?</summary><p>There's no server to run and no seats to buy. A report is a <code>.sql</code> file in your repo, and the output is a static <code>.html</code> file anyone can open. You review changes with <code>git diff</code>, not in a vendor's UI.</p></details>
       <details><summary>Can I keep a report up to date?</summary><p>Yes. Run <code>asql build</code> from cron or CI, for example with the Docker image, and publish the file wherever you host static pages. <code>--var client=acme</code> builds one report per client or month from the same <code>.sql</code> file. Repeat builds skip queries that haven't changed.</p></details>
       <details><summary>Can I change how reports look?</summary><p>Yes. A theme is a small CSS file of variables for colors, fonts and the chart palette. Pass it with <code>--theme</code>. Five themes ship in <code>themes/</code>.</p></details>
+      <details><summary>Is asql free?</summary><p>Yes. The binary and the Docker image are free to use. The source code isn't open.</p></details>
       <details><summary>Who owns the reports I build?</summary><p>You do. The <code>.sql</code> files and the reports you generate with asql are yours.</p></details>
       <details><summary>Can an AI assistant use asql?</summary><p>Yes. Install the Claude Code skills and describe the dashboard you want. Claude writes the <code>.sql</code> file, builds it with asql and checks that every chart renders.</p></details>
     </div>
